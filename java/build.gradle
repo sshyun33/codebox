@@ -1,0 +1,23 @@
+group 'com.rohaky'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Test Dependencies
+    testCompile "junit:junit:4.12"
+    testCompile "org.hamcrest:hamcrest-core:1.3"
+    testCompile "org.hamcrest:hamcrest-library:1.3"
+    testCompile "org.mockito:mockito-all:1.+"
+
+    // Utility Dependencies
+    compile "org.apache.commons:commons-lang3:3.5"
+    compile "org.apache.commons:commons-io:1.3.2"
+    compile "com.google.guava:guava:20.0"
+}
