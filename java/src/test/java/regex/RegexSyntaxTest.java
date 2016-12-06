@@ -45,7 +45,6 @@ public class RegexSyntaxTest {
      * \V : A non-vertical whitespace character [^\v]
      * \w : A word character [a-zA-Z_0-9]
      * \W : A non-word character [^\w]
-     * @throws Exception
      */
     @Test
     public void testPredefinedCharacterClasses() throws Exception {
@@ -67,7 +66,6 @@ public class RegexSyntaxTest {
      * \G : The end of the previous match
      * \Z : The end of the input but for the final terminator, if any
      * \z : the end of the input
-     * @throws Exception
      */
     @Test
     public void testBoundaryMatchers() throws Exception {
@@ -77,5 +75,31 @@ public class RegexSyntaxTest {
         assertTrue("John is a developer.".matches("^(John).*(developer\\.)$"));
         assertTrue("John is a developer.".matches("\\bJohn\\b is.*"));
         assertTrue("John is a developer.".matches("J\\Boh\\Bn is.*"));
+    }
+
+
+    /**
+     * X? : X, once or not at all
+     * X* : X, zero or more times
+     * X+ : X, one or more times
+     * X{n} : X, exactly n times
+     * X{n,} : X, at least n times
+     * X{n,m} : X, at least n times but not more m times
+     */
+    @Test
+    public void testGreedyQuantifiers() throws Exception {
+        assertTrue("X".matches("XX?"));
+        assertTrue("XX".matches("XX?"));
+        assertTrue("X".matches("XX*"));
+        assertTrue("XXX".matches("XX*"));
+        assertFalse("X".matches("XX+"));
+        assertTrue("XXX".matches("XX+"));
+
+        assertTrue("X".matches("X{1}"));
+        assertTrue("X".matches("X{1,}"));
+        assertTrue("XX".matches("X{1,}"));
+        assertTrue("X".matches("X{1,2}"));
+        assertTrue("XX".matches("X{1,2}"));
+        assertFalse("XXX".matches("X{1,2}"));
     }
 }
