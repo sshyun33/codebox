@@ -3,16 +3,24 @@ package regex;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class RegexSyntaxTest {
-    
+
     private String text;
 
     @Before
     public void setUp() throws Exception {
-        text = "John went for a walk, and John fell down, and John hurt his knee."; 
+        text = "John went for a walk, and John fell down, and John hurt his knee.";
     }
 
     //
@@ -87,7 +95,7 @@ public class RegexSyntaxTest {
      * X{n,m} : X, at least n times but not more m times
      */
     @Test
-    public void testGreedyQuantifiers() throws Exception {
+    public void testQuantifiers() throws Exception {
         assertTrue("X".matches("XX?"));
         assertTrue("XX".matches("XX?"));
         assertTrue("X".matches("XX*"));
@@ -102,4 +110,56 @@ public class RegexSyntaxTest {
         assertTrue("XX".matches("X{1,2}"));
         assertFalse("XXX".matches("X{1,2}"));
     }
+
+    @Test
+    public void testReluctantQuantifier() throws Exception {
+        text = "John went for a walk, and John fell down, and John hurt his knee.";
+
+        List<String> result =
+                findThenResultList("John.*?", text); // .*? == zero character
+
+        assertThat(result, is(Arrays.asList("John", "John", "John")));
+    }
+
+    @Test
+    public void testGreedyQuantifier() throws Exception {
+        text = "John went for a walk, and John fell down, and John hurt his knee.";
+
+        List<String> result =
+                // .* ==> match the rest of the characters
+                findThenResultList("John.*", text);
+
+        assertThat(result, is(Arrays.asList(text)));
+    }
+
+    @Test
+    public void testPossesiveQuantifier() throws Exception {
+        text = "John went for a walk, and John fell down, and John hurt his knee.";
+
+        List<String> result =
+                findThenResultList("John.*+", text);
+
+        assertThat(result, is(Arrays.asList(text)));
+
+        result =
+                // .*+ ==> matches as much as possible,
+                // regardless of whether the expression will match or not.
+                findThenResultList("John.*+knee\\.", text);
+
+        assertTrue(result.isEmpty());
+    }
+
+    private List<String> findThenResultList(String regex, String text) {
+        List<String> result = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            result.add(text.substring(matcher.start(), matcher.end()));
+        }
+
+        return result;
+    }
+
+
 }
