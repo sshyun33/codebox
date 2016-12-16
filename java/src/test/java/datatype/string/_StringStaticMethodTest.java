@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class _StringStaticMethodTest {
 
@@ -30,11 +31,19 @@ public class _StringStaticMethodTest {
     }
 
     @Test
-    public void test2() throws Exception {
+    public void getCharacterOrCodePointFromIndex() throws Exception {
         text = "This is sample text.";
-
+        // get a character from the index
         assertThat(text.charAt(1), is('h'));
-        // get unicode code point from index
+        // get a unicode codepoint from the index
         assertThat(text.codePointAt(1), is(104));
+    }
+
+    @Test
+    public void testStringStartsOrEndsWith() throws Exception {
+        text = "This is sample text.";
+        assertTrue(text.startsWith("This"));
+        assertTrue(text.startsWith("is", 5));
+        assertTrue(text.endsWith("text."));
     }
 }
