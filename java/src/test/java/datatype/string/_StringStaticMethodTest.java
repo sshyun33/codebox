@@ -46,4 +46,10 @@ public class _StringStaticMethodTest {
         assertTrue(text.startsWith("is", 5));
         assertTrue(text.endsWith("text."));
     }
+
+    @Test
+    public void testTrim() throws Exception {
+        text = "\n \t This is sam\tple text.  \n \r \t";
+        assertThat(text.trim(), is("This is sam\tple text."));
+    }
 }
