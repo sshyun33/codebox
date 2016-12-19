@@ -7,7 +7,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-public class _StringStaticMethodTest {
+public class StringHelperMethodTest {
 
     private String text;
 
