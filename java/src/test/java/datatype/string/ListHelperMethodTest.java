@@ -1,9 +1,13 @@
 package datatype.string;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
@@ -11,7 +15,6 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class ListHelperMethodTest {
-
 
     private ArrayList<String> fruits;
 
@@ -46,5 +49,24 @@ public class ListHelperMethodTest {
 
         int orangeLastIdx = fruits.lastIndexOf("orange");
         assertThat(orangeLastIdx, is(3));
+    }
+
+    @Test
+    public void testListRemoves() throws Exception {
+        fruits = Lists.newArrayList("apple", "orange", "peach", "orange");
+        fruits.remove(0);
+        assertThat(fruits, is(Arrays.asList("orange", "peach", "orange")));
+
+        fruits = Lists.newArrayList("apple", "orange", "peach", "orange");
+        fruits.remove("orange"); // remove the first occurrence
+        assertThat(fruits, is(Arrays.asList("apple", "peach", "orange")));
+
+        fruits = Lists.newArrayList("apple", "orange", "peach", "orange");
+        fruits.removeIf(x -> x.equals("orange"));
+        assertThat(fruits, is(Arrays.asList("apple", "peach")));
+
+        fruits = Lists.newArrayList("apple", "orange", "peach", "orange");
+        fruits.removeAll(Arrays.asList("orange", "peach"));
+        assertThat(fruits, is(Collections.singletonList("apple")));
     }
 }
