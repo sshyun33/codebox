@@ -45,6 +45,7 @@ public class ListHelperMethodTest {
         fruits.add("orange");
 
         int orangeFirstIdx = fruits.indexOf("orange");
+
         assertThat(orangeFirstIdx, is(1));
 
         int orangeLastIdx = fruits.lastIndexOf("orange");
