@@ -1,13 +1,18 @@
 package datatype.string;
 
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.internal.matchers.Null;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
+import static java.util.stream.IntStream.rangeClosed;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -81,5 +86,53 @@ public class MapHelperMethodTest {
 
         assertThat(map.get("first"), is(200));
         assertThat(map.get("second"), is(100));
+    }
+
+    @Test
+    public void testContains() throws Exception {
+        // {1:"file1", 2: null, 3: "file3", 4: "file4"}
+        assertTrue(fileMap.containsKey(3));
+        assertTrue(fileMap.containsValue("file3"));
+        assertTrue(fileMap.containsValue(null));
+    }
+
+    @Test
+    public void testGetOrDefault() throws Exception {
+        // {1:"file1", 2: null, 3: "file3", 4: "file4"}
+        assertThat(fileMap.getOrDefault(1, "no file"), is("file1"));
+        assertThat(fileMap.getOrDefault(2, "no file"), is(nullValue()));
+        assertThat(fileMap.getOrDefault(5, "no file"), is("no file"));
+    }
+
+    @Test
+    public void testValuesToListOrArray() throws Exception {
+        Collection<String> values = fileMap.values();
+
+        ArrayList<String> valuesList = new ArrayList<>(values);
+        assertThat(valuesList, is(Arrays.asList("file1", null, "file3", "file4")));
+
+        String[] valuesArr = values.stream().toArray(String[]::new);
+        assertThat(valuesArr, is(new String[]{"file1", null, "file3", "file4"}));
+    }
+
+    @Test
+    public void testPutEntry() throws Exception {
+        // {1:"file1", 2: null, 3: "file3", 4: "file4"}
+        rangeClosed(1, fileMap.size() + 1).forEach(i ->
+                fileMap.putIfAbsent(i, "new file"));
+
+        assertThat(fileMap, is(ImmutableMap
+                .of(1, "file1", 2, "new file", 3, "file3", 4, "file4", 5, "new file")));
+
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "james"); // return old value or null(if absent)
+        assertThat(map.get(1), is("james"));
+
+        map.putAll(ImmutableMap.of(2, "tom", 3, "beck"));
+        assertThat(map, is(ImmutableMap.of(1, "james", 2, "tom", 3, "beck")));
+    }
+
+    @Test
+    public void testReplace() throws Exception {
     }
 }
