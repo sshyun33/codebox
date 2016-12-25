@@ -1,14 +1,10 @@
 package datatype.string;
 
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.internal.matchers.Null;
 
 import java.util.*;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static org.hamcrest.CoreMatchers.is;
@@ -119,7 +115,7 @@ public class MapHelperMethodTest {
     public void testPutEntry() throws Exception {
         // {1:"file1", 2: null, 3: "file3", 4: "file4"}
         rangeClosed(1, fileMap.size() + 1).forEach(i ->
-                fileMap.putIfAbsent(i, "new file"));
+                fileMap.putIfAbsent(i, "new file")); // put if value is absent or null
 
         assertThat(fileMap, is(ImmutableMap
                 .of(1, "file1", 2, "new file", 3, "file3", 4, "file4", 5, "new file")));
