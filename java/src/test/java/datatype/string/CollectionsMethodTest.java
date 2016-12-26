@@ -27,6 +27,10 @@ public class CollectionsMethodTest {
 
         Collections.copy(dest, src); // destination must be at least as long as source list
 
+        assertEqualsUnderSrcSize(dest, src);
+    }
+
+    private void assertEqualsUnderSrcSize(List<Integer> dest, List<Integer> src) {
         IntStream.rangeClosed(0, 19).forEach(i -> {
             if (i < src.size()) assertTrue(src.get(i).equals(dest.get(i)));
             else assertTrue(dest.get(i).equals(0));
