@@ -1,4 +1,4 @@
-package datatype.string;
+package datatype;
 
 import org.junit.Test;
 
