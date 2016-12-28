@@ -45,6 +45,19 @@ public class CollectionsMethodTest {
         assertThat(numbers, is(Arrays.asList(1, 1, 1, 1, 1)));
     }
 
+    @Test
+    public void testMaxOrMin() throws Exception {
+        List<Integer> numbers = Arrays.asList(2, 3, 1, 6, 1, 5);
+
+        // use x.compareTo(y), use Integer(boxing)
+        assertThat(Collections.max(numbers), is(6));
+        assertThat(Collections.min(numbers), is(1));
+
+        assertThat(Collections.max(numbers,
+                (x,y) -> (x > y) ? -1 : ((x.equals(y)) ? 0 : 11)), // compare reversely
+                is(1));
+    }
+
     private void assertEqualsUnderSrcSize(List<Integer> dest, List<Integer> src) {
         IntStream.rangeClosed(0, 19).forEach(i -> {
             if (i < src.size()) assertTrue(src.get(i).equals(dest.get(i)));
