@@ -49,7 +49,8 @@ public class CollectionsMethodTest {
     public void testMaxOrMin() throws Exception {
         List<Integer> numbers = Arrays.asList(2, 3, 1, 6, 1, 5);
 
-        // use x.compareTo(y), use Integer(boxing)
+        // max(),min() use x.compareTo(y).
+        // so argument must be implement Comparable interface.
         assertThat(Collections.max(numbers), is(6));
         assertThat(Collections.min(numbers), is(1));
 

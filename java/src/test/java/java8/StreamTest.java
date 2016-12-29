@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
@@ -37,5 +40,34 @@ public class StreamTest {
         boolean noneEndWithZ = stringCollection.stream()
                 .noneMatch(s -> s.endsWith("z"));
         assertTrue(noneEndWithZ);
+    }
+
+    @Test
+    public void testReuseStream() throws Exception {
+        Supplier<Stream<String>> streamSupplier =
+                () -> Stream.of("a2", "a2", "b1", "b3", "c");
+
+        boolean use01 = streamSupplier.get().noneMatch(s -> s.equals("e"));
+        assertTrue(use01);
+
+        boolean use02 = streamSupplier.get().anyMatch(s -> s.equals("b1"));
+        assertTrue(use02);
+    }
+
+    @Test
+    public void testInfiniteStream() throws Exception {
+        Stream<Integer> infiniteNumbers = Stream.iterate(0, n -> n + 2);
+        List<Integer> evenNumbers = infiniteNumbers
+                .limit(5) // 빼먹으면 무한 실행!
+                .collect(toList());
+
+        Stream<Integer> infiniteRandomNumbers =
+                Stream.generate(() -> new Random().nextInt(10) + 1); // random(1~10)
+
+        boolean isInOneToTen = infiniteRandomNumbers
+                .limit(100)
+                .allMatch(n -> n >= 1 && n <= 10);
+
+        assertTrue(isInOneToTen);
     }
 }
