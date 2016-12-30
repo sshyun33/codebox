@@ -20,14 +20,16 @@ public class StringHelperMethodTest {
     public void createStringFromCharArray() throws Exception {
         text = "This is sample text.";
 
-        String copy01 = String.copyValueOf(text.toCharArray());
+        String copy01 = String.copyValueOf(text.toCharArray()); // equals valueOf()
         String copy02 = String.valueOf(text.toCharArray());
-        String copy03 = String.valueOf(text.toCharArray(), 0, 3);
+        String copy03 = String.valueOf(text.toCharArray(), 0, 3); // valueOf(data, offset, count)
 
         assertThat(copy01, is(equalTo(text)));
         assertThat(copy01, is(not(sameInstance(text))));
+
         assertThat(copy02, is(equalTo(text)));
         assertThat(copy02, is(not(sameInstance(text))));
+
         assertThat(copy03, is(equalTo("Thi")));
     }
 
@@ -61,7 +63,7 @@ public class StringHelperMethodTest {
         assertThat(text.indexOf('i'), is(2));
         assertThat(text.lastIndexOf('i'), is(5));
 
-        assertThat(text.indexOf('i', 3), is(5));
+        assertThat(text.indexOf('i', 3), is(5)); // indexOf(char, fromIndex)
         assertThat(text.lastIndexOf('i', 4), is(2));
 
         assertThat(text.indexOf("sample"), is(8));
