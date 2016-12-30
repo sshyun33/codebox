@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -51,5 +52,29 @@ public class StringHelperMethodTest {
     public void testTrim() throws Exception {
         text = "\n \t This is sam\tple text.  \n \r \t";
         assertThat(text.trim(), is("This is sam\tple text."));
+    }
+
+    @Test
+    public void testIndexOf() throws Exception {
+        text = "This is sample text.";
+
+        assertThat(text.indexOf('i'), is(2));
+        assertThat(text.lastIndexOf('i'), is(5));
+
+        assertThat(text.indexOf('i', 3), is(5));
+        assertThat(text.lastIndexOf('i', 4), is(2));
+
+        assertThat(text.indexOf("sample"), is(8));
+        assertThat(text.lastIndexOf("sample"), is(8));
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        text = "EveRyONe";
+
+        assertTrue(text.equalsIgnoreCase("everyone"));
+
+        assertTrue(text.contentEquals(new StringBuilder(text)));
+        assertFalse(text.equals(new StringBuilder(text)));
     }
 }

@@ -2,9 +2,7 @@ package java8;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -69,5 +67,23 @@ public class StreamTest {
                 .allMatch(n -> n >= 1 && n <= 10);
 
         assertTrue(isInOneToTen);
+    }
+
+    @Test
+    public void testMapToX() throws Exception {
+        double avg = Stream.of("a1", "a2", "a3")
+                .map(s -> s.substring(1))
+                .mapToInt(Integer::parseInt)
+                .average()
+                .orElseThrow(NullPointerException::new);
+
+        assertThat(avg , is(2.0));
+
+        List<String> strings = Stream.of(1.0, 2.0, 3.0)
+                .mapToInt(Double::intValue)
+                .mapToObj(i -> "a" + i)
+                .collect(toList());
+
+        assertThat(strings, is(Arrays.asList("a1", "a2", "a3")));
     }
 }
