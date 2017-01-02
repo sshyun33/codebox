@@ -10,7 +10,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class StreamCollectorsTest {
-
     @Test
     public void testAveragingInt() throws Exception {
         Stream<String> numbers = Stream.of("a1", "e55555", "c333", "b22", "d4444");
