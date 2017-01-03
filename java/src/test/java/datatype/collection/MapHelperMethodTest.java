@@ -1,4 +1,4 @@
-package datatype;
+package datatype.collection;
 
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
