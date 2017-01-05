@@ -1,5 +1,5 @@
 describe("array test", function () {
-    var strings, numbers;
+    let strings, numbers;
 
     beforeEach(function () {
         strings = ["eeeee", "dddd", "ccc", "bb", "a"];
@@ -25,12 +25,12 @@ describe("array test", function () {
     });
 
     it("split string to array", function () {
-        var splitted = "a b c d e".split(" ");
+        const splitted = "a b c d e".split(" ");
         expect(splitted).toEqual(["a", "b", "c", "d", "e"]);
     });
 
     it("push and pop", function () {
-        var persons = [];
+        const persons = [];
 
         persons.push("Lee"); // insert to last place
         expect(persons).toEqual(["Lee"]);
@@ -43,7 +43,7 @@ describe("array test", function () {
     });
 
     it("unshift and shift", function () {
-        var persons = [];
+        const persons = [];
 
         persons.unshift("Lee"); // insert to first place
         expect(persons).toEqual(["Lee"]);
