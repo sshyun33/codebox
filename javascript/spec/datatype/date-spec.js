@@ -31,7 +31,6 @@ describe('test-date: ', function () {
         expect(date.getTime()).toBe(1483563600000); // Epoch time
     });
 
-
     it('Get date information', function () {
     })
 });
